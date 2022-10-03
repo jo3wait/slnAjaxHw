@@ -2,7 +2,35 @@
     ViewData["Title"] = "Home Page";
 }
 
+@section Styles{
+    <style>
+        h1{color:dimgray}
+        li{text-align:left}
+    </style>
+}
+
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">MSIT143 16_洪暐婷</h1>
+    <ul id="ul1">
+        <li></li>
+    </ul>    
 </div>
+
+
+@section Scripts{
+    <script src="~/js/travel.js"></script>
+    <script>
+        const theUl = document.querySelector('#ul1');
+        const docFrag = document.createDocumentFragment();
+
+        for (let i = 0; i < DATAS.length; i++) {
+            const { Name, Opentime, Ticketinfo, Tel, Add} = DATAS[i];
+            const txtLi = document.createTextNode(Name + ", " + Add + ", " + Tel);
+            const eleLi = document.createElement("li");
+            eleLi.appendChild(txtLi)
+            docFrag.appendChild(eleLi)
+        }
+        theUl.appendChild(docFrag)
+    </script>
+}
