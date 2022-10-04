@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form name="userInfo" method="post" enctype="multipart/form-data" action="~/Api/Register">
+            <div class="form-group">
+                <label for="InputName">姓名</label>
+                <input type="text" class="form-control" id="InputName" name="Name">
+                <small id="emailHelp" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                <label for="InputEmail">電子郵件</label>
+                <input type="email" class="form-control" id="InputEmail" name="Email">
+            </div>
+            <div class="form-group">
+                <label for="InputAge">年紀</label>
+                <input type="number" class="form-control" id="InputAge" name="Age">
+            </div>
+            <div class="form-group">
+                <label for="InputFile">選擇檔案</label>
+                <input type="file" class="form-control-file" id="InputFile" name="File1">
+            </div>
+            <button type="submit" id="buttonSubmit" class="btn btn-primary">送出</button>
+        </form>
+        <div id="div1" class="alert alert-primary" role="alert"></div>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+@section Scripts{
+    <script>
+
+
+    </script>
+    <script>
+    const btn = document.querySelector("#buttonSubmit")
+    const divMessage = document.querySelector("#div1")
+    const txtName = document.querySelector("#InputName")
+    const alert = document.querySelector("#emailHelp")
+    const xhr = new XMLHttpRequest();
+
+    btn.addEventListener("click", event => {
+        event.preventDefault(); //將預設的行為停止(即按下submit不會送出)
+
+        const formData = new FormData(document.userInfo); //將userInfo表單中的資料放到formData變數中
+
+        xhr.addEventListener("load", () => {
+            const data = xhr.responseText;
+            divMessage.textContent = data;
+        })
+
+        xhr.open("POST", document.userInfo.action); //"~/Api/Register"
+        xhr.send(formData);
+    })
+
+    txtName.addEventListener("blur", () => {
+        xhr.addEventListener("load", () => {
+            const data = xhr.responseText;
+            alert.textContent = data;
+        })
+        const url = "@Url.Content("~/api/checkExist")"
+        const params = `?Name=${txtName.value}`
+        xhr.open("Get", url + params);
+        xhr.send();
+    })
+    </script>
+}
+
+
