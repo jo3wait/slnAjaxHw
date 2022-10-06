@@ -38,5 +38,9 @@ namespace prjAjaxHw.Controllers
         {
             return View();
         }
+        public IActionResult Address()
+        {
+            return View();
+        }
     }
 }
