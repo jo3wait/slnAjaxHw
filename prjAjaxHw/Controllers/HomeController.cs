@@ -42,5 +42,9 @@ namespace prjAjaxHw.Controllers
         {
             return View();
         }
+        public IActionResult AutoComplete()
+        {
+            return View();
+        }
     }
 }

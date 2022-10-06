@@ -4,24 +4,30 @@
 
 @section Styles{
     <style>
-        h1{color:dimgray}
-        li{text-align:left}
+        h1 {
+            color: dimgray
+        }
+
+        li {
+            text-align: left
+        }
     </style>
 }
 
 
 <div class="text-center">
-    <h1 class="display-4">MSIT143 16_洪暐婷</h1>
-    <ul id="ul1">
+    @*<ul id="ul1">
         <li></li>
-    </ul>    
+    </ul>*@
+</div>
+<div class="card-columns">  
 </div>
 
 
 @section Scripts{
     <script src="~/js/travel.js"></script>
     <script>
-        const theUl = document.querySelector('#ul1');
+       @* const theUl = document.querySelector('#ul1');
         const docFrag = document.createDocumentFragment();
 
         for (let i = 0; i < DATAS.length; i++) {
@@ -31,6 +37,21 @@
             eleLi.appendChild(txtLi)
             docFrag.appendChild(eleLi)
         }
-        theUl.appendChild(docFrag)
+        theUl.appendChild(docFrag)*@
+    let htmlDatas = DATAS.map(data => {
+        let { Name, Toldescribe, Changetime, TYWebsite } = data 
+    return (
+    `<div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">${Name}</h5>
+            <p class="card-text">${Toldescribe}</p>
+            <p class="card-text"><small class="text-muted">最後更新日期：${Changetime}</small></p>
+            <a href="${TYWebsite}"class="card-link">更多資訊...</a>
+        </div>
+    </div>
+    `
+    )
+    })
+    document.querySelector(".card-columns").innerHTML = htmlDatas.join("")
     </script>
 }
