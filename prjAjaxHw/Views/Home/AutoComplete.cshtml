@@ -35,12 +35,13 @@
     inputText.addEventListener("input", async() => {
         const keyword = inputText.value
         listData.style.display = "block"
-        let results = await fetch("@Url.Content("~/api/autoCmpNWProduct")" + `?keyword=${keyword}`)
-        //let results = DATAS.filter(data => data.Name.indexOf(keyword) !== -1)
-        let htmlDatas = results.map(data => {
+        let results = await fetch("@Url.Content("~/api/autoCmpNW")" + `?product=${keyword}`)
+        let datas = await results.json()
+        //console.log(datas)
+        let htmlDatas = datas.map(data => {
             return (
                 `
-                <button type="button" onclick="read(event)" class="list-group-item list-group-item-action">${data.Name}</button>
+                <button type="button" onclick="read(event)" class="list-group-item list-group-item-action">${data}</button>
                 `)
         })
         listData.innerHTML = htmlDatas.join("")
