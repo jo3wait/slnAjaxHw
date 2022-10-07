@@ -31,7 +31,6 @@
         LoadCities()
 
         selCity.addEventListener("change", async () => {
-            
             //console.log(selCity.options[selCity.selectedIndex].value)
             const url = "@Url.Content("~/api/site")"
             const params = `?city=${selCity.options[selCity.selectedIndex].value}`
@@ -55,6 +54,53 @@
                 selRoad.options.add(opt)
             })
         })
+
+        @*
+         selCity.addEventListener("change", async () => {
+           //載入鄉鎮區
+           //載入路名
+            await loadSite()
+            await loadRoad()
+        })
+        selSite.addEventListener("change", async () => {
+            //載入路名
+            await loadRoad()
+        })
+
+        async function ajaxCall(url,sel,cb) {
+            let response = await fetch(url)
+            let datas = await response.json()
+            cb(sel,datas)
+        }
+         //網頁第一次載入時要同時
+        //載入城市
+        //載入鄉鎮區
+        //載入路名
+        //IIFE
+        (async function () {
+            await loadCity()
+            await loadSite()
+            await loadRoad()
+        }())
+        async function loadCity() {
+            await ajaxCall("@Url.Content("~/api/city")", selCity, rendering)
+        }
+        async function loadSite() {
+            const city = selCity.options[selCity.selectedIndex].value
+            await ajaxCall("@Url.Content("~/api/site")" + `?city=${city}`, selSite, rendering)
+        }
+        async function loadRoad() {
+            const site = selSite.options[selSite.selectedIndex].value
+            await ajaxCall("@Url.Content("~/api/road")" + `?site=${site}`, selRoad, rendering)
+        }
+        function rendering(sel, datas) {
+            sel.options.length = 0
+            datas.forEach(city => {
+                const opt = new Option(city, city)
+                sel.options.add(opt)
+            })
+        }
+        *@
 
     </script>
 }
